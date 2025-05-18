@@ -1,5 +1,5 @@
 import './globals.css';
-import ClientProvider from '../components/ClientProvider';
+import ClientProvider from './components/ClientProvider';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

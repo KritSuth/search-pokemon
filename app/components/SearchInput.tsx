@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import pokemonNames from '../pokemonNames.json';
+import pokemonNames from '../../pokemonNames.json';
 
 interface Props {
   initialName: string;

@@ -1,7 +1,7 @@
+import { notFound } from 'next/navigation';
 import { gql } from '@apollo/client';
 import { getClient } from '../../../lib/apollo-server-client';
-import PokemonResult from '../../../components/PokemonResult';
-import { notFound } from 'next/navigation';
+import PokemonResult from '../../components/PokemonResult';
 
 const GET_POKEMON = gql`
   query getPokemon($name: String!) {
@@ -24,13 +24,10 @@ const GET_POKEMON = gql`
   }
 `;
 
-type Props = {
-  params: { name: string };
-};
-
-export default async function PokemonPage({ params }: Props) {
+export default async function PokemonPage({ params }: { params: any }) {
   const { name } = params;
   const client = getClient();
+
   const { data } = await client.query({
     query: GET_POKEMON,
     variables: { name },
@@ -38,6 +35,7 @@ export default async function PokemonPage({ params }: Props) {
 
   const pokemon = data?.pokemon;
   if (!pokemon) return notFound();
+
   return (
     <main className="min-h-screen p-6">
       <PokemonResult name={name} />
@@ -45,11 +43,18 @@ export default async function PokemonPage({ params }: Props) {
   );
 }
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  const names = (await import('../../../pokemonNames.json')).default;
+  // import แบบ dynamic เพื่อให้แน่ใจว่าไฟล์ JSON โหลดได้
+  const namesModule = await import('../../../pokemonNames.json');
+  const names = namesModule.default;
+
+  if (!names || !Array.isArray(names) || names.length === 0) {
+    throw new Error('pokemonNames.json is undefined, empty or invalid');
+  }
+
   return names.map((name: string) => ({
     name: name.toLowerCase(),
   }));
 }
-
-export const dynamicParams = true;

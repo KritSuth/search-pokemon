@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import PokemonResult from '../components/PokemonResult';
+import PokemonResult from '../app/components/PokemonResult';
 import { MockedProvider } from '@apollo/client/testing';
 import { GET_POKEMON } from '../graphql/queries';
 import { bulbasaur, charmander, squirtle } from '../__mocks__/pokemonMocks';
