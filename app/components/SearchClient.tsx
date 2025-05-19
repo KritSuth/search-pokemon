@@ -16,7 +16,9 @@ export default function SearchClient() {
         {name ? (
           <PokemonResult name={name} />
         ) : (
-          <p className="text-center text-gray-500">Please enter a Pokémon name to search.</p>
+          <p className="text-center text-inherit text-gray-500">
+            Please enter a Pokémon name to search.
+          </p>
         )}
       </div>
     </>

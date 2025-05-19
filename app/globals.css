@@ -5,22 +5,18 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* Dark mode: เปลี่ยนจาก :root → html เพื่อให้ทำงานเสถียรกว่า */
 @media (prefers-color-scheme: dark) {
-  :root {
+  html {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
 
+/* ป้องกัน fallback + ตั้งค่าพื้นฐาน */
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--background, #ffffff);   /* fallback ถ้า variable ไม่ทำงาน */
+  color: var(--foreground, #000000);        /* fallback เป็นสีดำ */
   font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.3s, color 0.3s;  /* smooth transition เมื่อเปลี่ยน theme */
 }
